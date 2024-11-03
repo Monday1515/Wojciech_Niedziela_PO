@@ -7,7 +7,7 @@
 #include "classKurier.h"  // Zakładamy, że trasa jest związana z kurierem
 #include "classMapa.h" // Upewnij się, że nagłówek Mapa jest dołączony
 #include "classMagazyn.h" // Upewnij się, że nagłówek Magazyn jest dołączony
-
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
@@ -33,6 +33,8 @@ public:
 
     // Metoda do obliczania optymalnej trasy (szkic)
     void obliczOptymalnaTrase() const;
+
+    void draw(sf::RenderWindow& window);
 };
 
 #endif // CLASSTRASA_H
