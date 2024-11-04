@@ -12,15 +12,15 @@ int main() {
 
 
     // Inicjalizacja magazynu
-    Magazyn magazyn("Warszawa, ul. Przykladowa 1");
+    Magazyn magazyn("Warszawa, ul. Przykladowa 1", 0.0, 0.0);
 
     // Inicjalizacja kuriera
     Kurier kurier(1, "Jan", "Kowalski", "samochód dostawczy", &magazyn); // Dodano nazwisko
 
     // Inicjalizacja paczek
-    Paczka paczka1(1, "Warszawa, ul. Wspolna 5", 2.5);
-    Paczka paczka2(2, "Warszawa, ul. Krotka 12", 1.0);
-    Paczka paczka3(2, "Warszawa, ul. test 0", 10.0);
+    Paczka paczka1(1, "Warszawa, ul. Wspolna 5", 2.5, 30.0, 4.0);
+    Paczka paczka2(2, "Warszawa, ul. Krotka 12", 1.0, 6.0, 8.0);
+    Paczka paczka3(2, "Warszawa, ul. test 0", 10.0, 10.0, 10.0);
 
     // Inicjalizacja mapy
     Mapa mapa;
@@ -36,6 +36,17 @@ int main() {
 
     // Wyświetlenie trasy
     trasa.displayTrasa();
+
+    cout << endl;
+
+    // Wyznaczenie i wyświetlenie optymalnej trasy metodą algorytmu zachłannego
+    vector<Paczka> optymalnaTrasa = trasa.znajdzTraseAlgorytmZachlanny();
+    cout << "Optymalna trasa kuriera (algorytm zachlanny):" << endl;
+    for (const auto& paczka : optymalnaTrasa) {
+        cout << "Dostawa pod adres: " << paczka.getAdres() << endl;
+    }
+
+    cout << endl;
 
     while (window.isOpen()) {
         sf::Event event;

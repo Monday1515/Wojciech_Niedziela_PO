@@ -35,6 +35,8 @@ public:
     void obliczOptymalnaTrase() const;
 
     void draw(sf::RenderWindow& window);
+
+    vector<Paczka> znajdzTraseAlgorytmZachlanny();  // Deklaracja metody zachłannej
 };
 
 #endif // CLASSTRASA_H

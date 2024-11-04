@@ -10,14 +10,20 @@ using namespace std;
 class Magazyn {
 private:
     string adres_magazynu;
+    double x;  // współrzędna x magazynu
+    double y;  // współrzędna y magazynu
     vector<Paczka> paczki;
 
 public:
     // Konstruktor
-    Magazyn(const string& adres); //: adres_magazynu(adres) {}
+    Magazyn(const string& adres, double x, double y); //: adres_magazynu(adres) {}
 
     string getAdresMagazynu() const;
 
+    double getX() const;
+
+    double getY() const;
+    
     // Dodawanie paczki do magazynu
     void dodajPaczke(const Paczka& paczka);
 

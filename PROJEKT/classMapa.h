@@ -12,11 +12,15 @@ class Mapa {
 private:
     vector<pair<string, pair<double, double>>> lokalizacje; // Nazwa lokalizacji oraz współrzędne (szerokość, długość)
     map<pair<string, string>, double> odleglosci;           // Mapa odległości między lokalizacjami
-
+    
+    
 public:
     // Konstruktor
     Mapa();
 
+    double odleglosc(double x1, double y1, double x2, double y2) const;  // Metoda do obliczania odległości euklidesowej
+
+    
     // Dodawanie lokalizacji
     void dodajLokalizacje(const string& nazwa, double szerokosc, double dlugosc);
 
@@ -28,6 +32,9 @@ public:
 
     // Wyświetlanie wszystkich odległości
     void displayOdleglosci() const;
+
+    double odleglosc(const string& lokacja1, const string& lokacja2) const;  // Metoda do uzyskania odległości
+
 
     // Metoda do znajdowania lokalizacji (szkic)
     pair<double, double> znajdzLokalizacje(const string& nazwa) const;

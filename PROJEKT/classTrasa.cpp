@@ -1,6 +1,9 @@
 #include "classTrasa.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <cmath>
+#include <limits>
+#include <algorithm>
 
 using namespace std;
 
@@ -49,9 +52,73 @@ void Trasa::displayTrasa() const {
     }
 }
 
-// Metoda do obliczania optymalnej trasy
-void Trasa::obliczOptymalnaTrase() const {
-    // Szkic metody - można ją rozwinąć o konkretne algorytmy
-    cout << "Obliczanie optymalnej trasy..." << endl;
-    // Tutaj można zaimplementować algorytmy, takie jak Dijkstra, A*, itp.
+// // Metoda do obliczania optymalnej trasy
+// void Trasa::obliczOptymalnaTrase() const {
+//     // Szkic metody - można ją rozwinąć o konkretne algorytmy
+//     cout << "Obliczanie optymalnej trasy..." << endl;
+//     // Tutaj można zaimplementować algorytmy, takie jak Dijkstra, A*, itp.
+// }
+
+
+// vector<Paczka> Trasa::znajdzTraseAlgorytmZachlanny() {
+//     vector<Paczka> optymalnaTrasa;
+//     vector<bool> odwiedzone(paczki.size(), false); // Śledzenie odwiedzonych paczek
+//     string aktualnaLokacja = magazyn->getAdresMagazynu();
+
+//     while (optymalnaTrasa.size() < paczki.size()) {
+//         double minDystans = numeric_limits<double>::max();
+//         int najblizszaPaczkaIndex = -1;
+
+//         // Szukaj najbliższej paczki
+//         for (size_t i = 0; i < paczki.size(); i++) {
+//             if (!odwiedzone[i]) {
+//                 double dystans = mapa->odleglosc(aktualnaLokacja, paczki[i].getAdres());
+//                 if (dystans < minDystans) {
+//                     minDystans = dystans;
+//                     najblizszaPaczkaIndex = i;
+//                 }
+//             }
+//         }
+
+//         // Dodaj najbliższą paczkę do trasy i ustaw jej adres jako nową lokalizację
+//         if (najblizszaPaczkaIndex != -1) {
+//             odwiedzone[najblizszaPaczkaIndex] = true;
+//             optymalnaTrasa.push_back(paczki[najblizszaPaczkaIndex]);
+//             aktualnaLokacja = paczki[najblizszaPaczkaIndex].getAdres();
+//         }
+//     }
+
+//     return optymalnaTrasa;
+// }
+
+
+vector<Paczka> Trasa::znajdzTraseAlgorytmZachlanny() {
+    vector<Paczka> optymalnaTrasa;
+    vector<bool> odwiedzone(paczki.size(), false); 
+    double aktualnaX = magazyn->getX();
+    double aktualnaY = magazyn->getY();
+
+    while (optymalnaTrasa.size() < paczki.size()) {
+        double minDystans = numeric_limits<double>::max();
+        int najblizszaPaczkaIndex = -1;
+
+        for (size_t i = 0; i < paczki.size(); i++) {
+            if (!odwiedzone[i]) {
+                double dystans = mapa->odleglosc(aktualnaX, aktualnaY, paczki[i].getX(), paczki[i].getY());
+                if (dystans < minDystans) {
+                    minDystans = dystans;
+                    najblizszaPaczkaIndex = i;
+                }
+            }
+        }
+
+        if (najblizszaPaczkaIndex != -1) {
+            odwiedzone[najblizszaPaczkaIndex] = true;
+            optymalnaTrasa.push_back(paczki[najblizszaPaczkaIndex]);
+            aktualnaX = paczki[najblizszaPaczkaIndex].getX();
+            aktualnaY = paczki[najblizszaPaczkaIndex].getY();
+        }
+    }
+
+    return optymalnaTrasa;
 }
