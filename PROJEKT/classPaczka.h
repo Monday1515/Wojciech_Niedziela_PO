@@ -23,6 +23,11 @@ public:
     double getX() const;
     double getY() const;
 
+    bool operator==(const Paczka& other) const {
+        // this->id_paczki == other.id_paczki;
+        return id_paczki == other.id_paczki;
+    }
+    
     // Metoda do wyświetlania informacji o paczce
     void display() const;
 };

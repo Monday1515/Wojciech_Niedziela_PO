@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <random>
 #include <limits>
 #include <algorithm>
 
@@ -121,4 +122,78 @@ vector<Paczka> Trasa::znajdzTraseAlgorytmZachlanny() {
     }
 
     return optymalnaTrasa;
+}
+
+
+double Trasa::obliczDlugoscTrasy(const vector<Paczka>& trasa) const {
+    double dlugosc = 0.0;
+    double x = magazyn->getX();
+    double y = magazyn->getY();
+
+    for (const auto& paczka : trasa) {
+        dlugosc += mapa->odleglosc(x, y, paczka.getX(), paczka.getY());
+        x = paczka.getX();
+        y = paczka.getY();
+    }
+
+    // Dodaj odległość powrotną do magazynu
+    dlugosc += mapa->odleglosc(x, y, magazyn->getX(), magazyn->getY());
+    return dlugosc;
+}
+
+vector<Paczka> Trasa::krzyzowanie(const vector<Paczka>& rodzic1, const vector<Paczka>& rodzic2) {
+    int punktPrzeciecia = rand() % rodzic1.size();
+    vector<Paczka> dziecko = rodzic1;
+
+    int indeks = punktPrzeciecia;
+    for (const auto& paczka : rodzic2) {
+        if (find(dziecko.begin(), dziecko.end(), paczka) == dziecko.end()) {
+            dziecko[indeks % dziecko.size()] = paczka;
+            indeks++;
+        }
+    }
+    return dziecko;
+}
+
+void Trasa::mutacja(vector<Paczka>& trasa) {
+    int i = rand() % trasa.size();
+    int j = rand() % trasa.size();
+    swap(trasa[i], trasa[j]);
+}
+
+vector<Paczka> Trasa::znajdzTraseAlgorytmGenetyczny(int rozmiarPopulacji, int liczbaPokolen) {
+    vector<vector<Paczka>> populacja(rozmiarPopulacji);
+
+    random_device rd;
+    mt19937 generator(rd());
+
+    for (int i = 0; i < rozmiarPopulacji; ++i) {
+        vector<Paczka> trasa = paczki;
+        std::shuffle(trasa.begin(), trasa.end(), generator);
+        populacja[i] = trasa;
+    }
+
+    for (int pokolenie = 0; pokolenie < liczbaPokolen; ++pokolenie) {
+        sort(populacja.begin(), populacja.end(), [this](const vector<Paczka>& a, const vector<Paczka>& b) {
+            return obliczDlugoscTrasy(a) < obliczDlugoscTrasy(b);
+        });
+
+        vector<vector<Paczka>> nowaPopulacja(populacja.begin(), populacja.begin() + rozmiarPopulacji / 2);
+
+        while (nowaPopulacja.size() < rozmiarPopulacji) {
+            int i1 = rand() % (rozmiarPopulacji / 2);
+            int i2 = rand() % (rozmiarPopulacji / 2);
+            vector<Paczka> dziecko = krzyzowanie(populacja[i1], populacja[i2]);
+
+            if (rand() % 100 < 10) { 
+                mutacja(dziecko);
+            }
+
+            nowaPopulacja.push_back(dziecko);
+        }
+
+        populacja = nowaPopulacja;
+    }
+
+    return populacja[0];
 }

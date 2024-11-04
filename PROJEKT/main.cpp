@@ -48,6 +48,17 @@ int main() {
 
     cout << endl;
 
+
+    vector<Paczka> optymalnaTrasaAlgorytmGenetyczny = trasa.znajdzTraseAlgorytmGenetyczny();
+
+    cout << "Optymalna trasa:" << endl;
+    for (const auto& paczka : optymalnaTrasaAlgorytmGenetyczny) {
+        paczka.display();
+    }
+
+
+    cout << endl;
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {

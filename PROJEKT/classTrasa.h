@@ -20,6 +20,11 @@ private:
     string start;                  // Miejsce startowe
     string koniec;                 // Miejsce końcowe
 
+
+    double obliczDlugoscTrasy(const vector<Paczka>& trasa) const;
+    vector<Paczka> krzyzowanie(const vector<Paczka>& rodzic1, const vector<Paczka>& rodzic2);
+    void mutacja(vector<Paczka>& trasa);
+
 public:
     // Konstruktor
     //Trasa(Kurier* kurier, const string& start, const string& koniec);
@@ -37,6 +42,9 @@ public:
     void draw(sf::RenderWindow& window);
 
     vector<Paczka> znajdzTraseAlgorytmZachlanny();  // Deklaracja metody zachłannej
+
+    vector<Paczka> znajdzTraseAlgorytmGenetyczny(int rozmiarPopulacji = 50, int liczbaPokolen = 1000); 
+    // Deklaracja metody genetycznej
 };
 
 #endif // CLASSTRASA_H
