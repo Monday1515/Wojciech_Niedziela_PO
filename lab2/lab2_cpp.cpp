@@ -23,7 +23,7 @@ class Samochód
     }
     ~Samochód()
     {
-        cout << "Destruktor wywolany dla " << marka <<" "<< model << endl;
+        cout << "Destruktor wywolany dla " << marka <<" "<< model << endl; // informacja o likwidacji obiektu?
     }
 };
 
@@ -57,7 +57,7 @@ public:
 };
 
 
-int main()
+int main() // // Prosze tworzyc obiekty takze w pamieci dyamicznej
 {
     Samochód();
     Samochód("Audi", "A4", 2010);
