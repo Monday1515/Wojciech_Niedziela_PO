@@ -29,7 +29,7 @@ class Nauczyciel : public Pracownik
             this->przedmiot = przedmiot;
         };
 
-        void GetDane() const
+        void GetDane() const    // ta metoda powinna zostać zdefiniowana jako (ew. czysto) wirtualna w klasie Pracownik
         {
             cout << "Stanowisko: " << stanowisko << endl;
             cout << "Wynagrodzenie: " << wynagrodzenie << endl;
@@ -71,8 +71,8 @@ class Osoba
             this->imie = imie;
             this->nazwisko = nazwisko;
             this->wiek = wiek;
-            this->email = email;
-            this->telefon = telefon;
+            this->email = email;   // bez walidacji?
+            this->telefon = telefon;  // j.w.
         };
 
         void GetImie()
@@ -140,7 +140,7 @@ class Osoba
 
 
 int main()
-{
+{    // proszę tworzyć obiekty także w pamięci dynamicznej
     Osoba osoba1("Jan", "Kowalski", 30, "test@gmail.com", "123456789");
     osoba1.GetImie();
     osoba1.GetNazwisko();
