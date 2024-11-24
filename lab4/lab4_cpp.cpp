@@ -15,6 +15,13 @@ class Pracownik
             this->wynagrodzenie = wynagrodzenie;
         };
 
+        virtual void GetDane() const {
+            cout << "Stanowisko: " << stanowisko << endl;
+            cout << "Wynagrodzenie: " << wynagrodzenie << endl;
+        }
+
+    virtual ~Pracownik() {}
+
 
 };
 
@@ -29,7 +36,7 @@ class Nauczyciel : public Pracownik
             this->przedmiot = przedmiot;
         };
 
-        void GetDane() const    // ta metoda powinna zostać zdefiniowana jako (ew. czysto) wirtualna w klasie Pracownik
+        void GetDane() const override   // ta metoda powinna zostać zdefiniowana jako (ew. czysto) wirtualna w klasie Pracownik
         {
             cout << "Stanowisko: " << stanowisko << endl;
             cout << "Wynagrodzenie: " << wynagrodzenie << endl;
@@ -48,7 +55,7 @@ class Administracja : public Pracownik
             this->obowiazki = obowiazki;
         };
 
-        void GetDane() const
+        void GetDane() const override
         {
             cout << "Stanowisko: " << stanowisko << endl;
             cout << "Wynagrodzenie: " << wynagrodzenie << endl;
@@ -71,10 +78,10 @@ class Osoba
             this->imie = imie;
             this->nazwisko = nazwisko;
             this->wiek = wiek;
-            this->email = email;   // bez walidacji?
-            this->telefon = telefon;  // j.w.
+            SetEmail(email);
+            SetTelefon(telefon);
         };
-
+        
         void GetImie()
         {
             cout << "Imie: " << imie << endl;
@@ -140,24 +147,32 @@ class Osoba
 
 
 int main()
-{    // proszę tworzyć obiekty także w pamięci dynamicznej
-    Osoba osoba1("Jan", "Kowalski", 30, "test@gmail.com", "123456789");
-    osoba1.GetImie();
-    osoba1.GetNazwisko();
-    osoba1.GetWiek();
-    osoba1.GetEmail();
-    osoba1.GetTelefon();
+{    
+    // Tworzenie obiektów dynamicznie
+    Osoba* osoba1 = new Osoba("Jan", "Kowalski", 30, "test@gmail.com", "123456789");
+    osoba1->GetImie();
+    osoba1->GetNazwisko();
+    osoba1->GetWiek();
+    osoba1->GetEmail();
+    osoba1->GetTelefon();
 
-    osoba1.SetImie("Adam");
-    osoba1.SetNazwisko("Nowak");
-    osoba1.SetWiek(40);
-    osoba1.SetEmail("wwwATgmail.com");
-    osoba1.SetTelefon("9876543210");
+    osoba1->SetImie("Adam");
+    osoba1->SetNazwisko("Nowak");
+    osoba1->SetWiek(40);
+    osoba1->SetEmail("wwwATgmail.com");
+    osoba1->SetTelefon("9876543210");
 
-    Nauczyciel nauczyciel1("Nauczyciel", 3000, "Matematyka");
-    nauczyciel1.GetDane();
+    // Tworzenie obiektów nauczyciela i administracji
+    Pracownik* nauczyciel1 = new Nauczyciel("Nauczyciel", 3000, "Matematyka");
+    nauczyciel1->GetDane();
 
-    Administracja administracja1("Administracja", 2000, "Sprzatanie");
-    administracja1.GetDane();
+    Pracownik* administracja1 = new Administracja("Administracja", 2000, "Sprzątanie");
+    administracja1->GetDane();
+
+    // Usuwanie obiektów dynamicznych
+    delete osoba1;
+    delete nauczyciel1;
+    delete administracja1;
+
     return 0;
 }
