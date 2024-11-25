@@ -1,3 +1,6 @@
+// g++ -o program main.cpp classPaczka.cpp classMagazyn.cpp classKurier.cpp classMapa.cpp classTrasa.cpp -lsfml-graphics -lsfml-window -lsfml-system
+// ./program
+
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -24,8 +27,6 @@ int main() {
     mapa.dodajOdleglosc("Warszawa, ul. Przykladowa 1", "Warszawa, ul. Wspolna 5", 3.2);
     mapa.dodajOdleglosc("Warszawa, ul. Przykladowa 1", "Warszawa, ul. Krotka 12", 4.5);
     mapa.dodajOdleglosc("Warszawa, ul. Wspolna 5", "Warszawa, ul. Krotka 12", 2.0);
-    mapa.dodajOdleglosc("Warszawa, ul. Wspolna 5", "Warszawa, ul. test 0", 2.0);
-    mapa.dodajOdleglosc("Warszawa, ul. Krotka 12", "Warszawa, ul. test 0", 2.0);
 
     // Tworzenie pól tekstowych dla interfejsu
     sf::Font font;
@@ -35,7 +36,7 @@ int main() {
     }
 
     sf::Text inputText("Wprowadz dane paczki:", font, 20);
-    inputText.setPosition(10, 10);
+    inputText.setPosition(100, 10);
 
     sf::Text idText("ID Paczki:", font, 20);
     idText.setPosition(10, 40);
@@ -52,7 +53,7 @@ int main() {
     sf::Text yText("Wspolrzedna Y:", font, 20);
     yText.setPosition(10, 200);
     
-    sf::RectangleShape inputField(sf::Vector2f(200, 30));
+    sf::RectangleShape inputField(sf::Vector2f(1, 30));
     inputField.setFillColor(sf::Color::White);
 
     // Tworzenie przycisków "Wyznacz trasę - alg. genetyczny" i "Wyznacz trasę - alg. zachłanny"
@@ -60,7 +61,7 @@ int main() {
     calculateGeneticButton.setPosition(10, 250);
     calculateGeneticButton.setFillColor(sf::Color::Green);
     
-    sf::Text geneticButtonText("Wyznacz trasę - alg. genetyczny", font, 20);
+    sf::Text geneticButtonText("alg. genetyczny", font, 20);
     geneticButtonText.setPosition(15, 260);
     geneticButtonText.setFillColor(sf::Color::White);
     
@@ -68,22 +69,27 @@ int main() {
     calculateGreedyButton.setPosition(220, 250);
     calculateGreedyButton.setFillColor(sf::Color::Blue);
     
-    sf::Text greedyButtonText("Wyznacz trasę - alg. zachłanny", font, 20);
+    sf::Text greedyButtonText("alg. zachlanny", font, 20);
     greedyButtonText.setPosition(225, 260);
     greedyButtonText.setFillColor(sf::Color::White);
+
+    sf::RectangleShape calculateThirdButton(sf::Vector2f(200, 50));
+    calculateThirdButton.setPosition(430, 250);
+    calculateThirdButton.setFillColor(sf::Color::Cyan);
     
-    // To store calculated routes
-    std::vector<std::string> routes;
+    sf::Text thirdButtonText("alg. Trzeci - TODO", font, 20);
+    thirdButtonText.setPosition(435, 260);
+    thirdButtonText.setFillColor(sf::Color::White);
 
-    // To store optimal routes
-    std::vector<Paczka> optimalRouteGenetic;
-    std::vector<Paczka> optimalRouteGreedy;
-
-    std::string inputBuffer;
-    int step = 0;
+    // Buffers for inputs
+    std::vector<std::string> inputBuffers(5, ""); // Buffers for ID, Address, Weight, X, Y
+    int step = 0; // Step tracker for the current field
     int paczkaId;
     std::string adres;
     double waga, x, y;
+
+    // Store calculated routes
+    std::vector<std::string> routes;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -92,12 +98,13 @@ int main() {
                 window.close();
 
             if (event.type == sf::Event::TextEntered) {
-                if (event.text.unicode < 128 && step < 20) {
-                    inputBuffer += static_cast<char>(event.text.unicode);
-                }
-                if (event.text.unicode == 8) { // Backspace
-                    if (!inputBuffer.empty()) {
-                        inputBuffer.pop_back();
+                if (event.text.unicode < 128 && step < 5) {
+                    char enteredChar = static_cast<char>(event.text.unicode);
+                    if (enteredChar == 8) { // Backspace
+                        if (!inputBuffers[step].empty())
+                            inputBuffers[step].pop_back();
+                    } else {
+                        inputBuffers[step] += enteredChar;
                     }
                 }
             }
@@ -105,53 +112,47 @@ int main() {
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
                 switch (step) {
                     case 0: // ID
-                        paczkaId = std::stoi(inputBuffer);
+                        paczkaId = std::stoi(inputBuffers[step]);
                         break;
-                    case 1: // Adres
-                        adres = inputBuffer;
+                    case 1: // Address
+                        adres = inputBuffers[step];
                         break;
-                    case 2: // Waga
-                        waga = std::stod(inputBuffer);
+                    case 2: // Weight
+                        waga = std::stod(inputBuffers[step]);
                         break;
-                    case 3: // X
-                        x = std::stod(inputBuffer);
+                    case 3: // X Coordinate
+                        x = std::stod(inputBuffers[step]);
                         break;
-                    case 4: // Y
-                        y = std::stod(inputBuffer);
-                        // Dodaj paczkę do wektora
+                    case 4: // Y Coordinate
+                        y = std::stod(inputBuffers[step]);
                         paczki.emplace_back(paczkaId, adres, waga, x, y);
-                        inputBuffer.clear();
-                        step = -1; // Resetuje krok
+
+                        // Resetowanie buforów i kroku po dodaniu paczki
+                        inputBuffers = std::vector<std::string>(5, ""); // Wyczyść bufory
+                        step = -1; // Zresetuj krok
                         break;
                 }
                 step++;
-                inputBuffer.clear(); // Resetuje bufor
-                if (step > 4) step = 4; // Ensure step does not exceed the last input
+                if (step > 4) step = 4; // Ensure step does not exceed the last input field
             }
 
-            // Check if the genetic algorithm button is clicked
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                     if (calculateGeneticButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                        // Inicjalizacja trasy
-                        Trasa trasa(&kurier, &magazyn, paczki, &mapa);
-                        
                         // Wyznaczanie tras algorytmem genetycznym
-                        optimalRouteGenetic = trasa.znajdzTraseAlgorytmGenetyczny();
+                        Trasa trasa(&kurier, &magazyn, paczki, &mapa);
+                        auto optimalRouteGenetic = trasa.znajdzTraseAlgorytmGenetyczny();
                         routes.clear();
                         for (const auto& paczka : optimalRouteGenetic) {
                             routes.push_back("Dostawa pod adres: " + paczka.getAdres());
                         }
                     }
                     
-                    // Check if the greedy algorithm button is clicked
                     if (calculateGreedyButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y))) {
-                        // Inicjalizacja trasy
-                        Trasa trasa(&kurier, &magazyn, paczki, &mapa);
-                        
                         // Wyznaczanie tras algorytmem zachłannym
-                        optimalRouteGreedy = trasa.znajdzTraseAlgorytmZachlanny();
+                        Trasa trasa(&kurier, &magazyn, paczki, &mapa);
+                        auto optimalRouteGreedy = trasa.znajdzTraseAlgorytmZachlanny();
                         routes.clear();
                         for (const auto& paczka : optimalRouteGreedy) {
                             routes.push_back("Dostawa pod adres: " + paczka.getAdres());
@@ -163,47 +164,51 @@ int main() {
 
         window.clear();
 
-        // Rysowanie tekstu
+        // Rysowanie tekstu i pól
         window.draw(inputText);
         window.draw(idText);
         window.draw(adresText);
         window.draw(wagaText);
         window.draw(xText);
         window.draw(yText);
-        
-        inputField.setPosition(150, 40 + step * 40); // Ustawia pozycję pola wejściowego
-        window.draw(inputField);
-        
-        // Wyświetlanie wprowadzonego tekstu
-        sf::Text currentInput(inputBuffer, font, 20);
-        currentInput.setPosition(150, 40 + step * 40);
-        window.draw(currentInput);
 
-        // Rysowanie przycisków
+        // Drawing input fields and their contents
+        for (int i = 0; i < 5; ++i) {
+            inputField.setPosition(150, 40 + i * 40);
+            window.draw(inputField);
+
+            sf::Text fieldText(inputBuffers[i], font, 20);
+            fieldText.setPosition(155, 40 + i * 40);
+            window.draw(fieldText);
+        }
+
+        // Drawing buttons
         window.draw(calculateGeneticButton);
         window.draw(geneticButtonText);
         window.draw(calculateGreedyButton);
         window.draw(greedyButtonText);
+        window.draw(calculateThirdButton);
+        window.draw(thirdButtonText);
 
-        // Display the entered packages data
+        // Display entered packages
         sf::Text packageDataText("Paczki:", font, 20);
         packageDataText.setPosition(10, 320);
         window.draw(packageDataText);
 
         for (size_t i = 0; i < paczki.size(); ++i) {
             sf::Text packageInfo(std::to_string(paczki[i].getId()) + ": " + paczki[i].getAdres(), font, 20);
-            packageInfo.setPosition(10, 350 + i * 30); // Offset each package below the previous
+            packageInfo.setPosition(10, 350 + i * 30);
             window.draw(packageInfo);
         }
 
-        // Display the calculated routes
+        // Display calculated routes
         sf::Text routeTitle("Wyznaczone trasy:", font, 20);
         routeTitle.setPosition(10, 500);
         window.draw(routeTitle);
 
         for (size_t i = 0; i < routes.size(); ++i) {
             sf::Text routeInfo(routes[i], font, 20);
-            routeInfo.setPosition(10, 530 + i * 30); // Offset each route below the previous
+            routeInfo.setPosition(10, 530 + i * 30);
             window.draw(routeInfo);
         }
 
