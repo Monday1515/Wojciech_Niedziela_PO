@@ -170,6 +170,14 @@ int main()
     greedyButtonText.setPosition(225, 260);
     greedyButtonText.setFillColor(sf::Color::White);
 
+    sf::RectangleShape calculateAnnealingButton(sf::Vector2f(200, 50));
+    calculateAnnealingButton.setPosition(430, 250);
+    calculateAnnealingButton.setFillColor(sf::Color::Cyan);
+
+    sf::Text AnnealingButtonText("alg. wyzarzania", font, 20);
+    AnnealingButtonText.setPosition(435, 260);
+    AnnealingButtonText.setFillColor(sf::Color::White);
+
     // Tworzenie przycisku "MAPA"
     sf::RectangleShape mapButton(sf::Vector2f(200, 50));
     mapButton.setPosition(640, 10);
@@ -300,6 +308,30 @@ int main()
                         routes.push_back("Calkowita dlugosc trasy: " + std::to_string(totalDistance) + " jednostek");
                     }
 
+                    if (calculateAnnealingButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                    {
+                        // Wyznaczanie tras algorytmem zachłannym
+                        Trasa trasa(&kurier, &magazyn, paczki, &mapa);
+                        auto optimalRouteAnnealing = trasa.znajdzTraseWyzarzanie();
+                        routes.clear();
+
+                        double totalDistance = 0.0;
+                        double prevX = magazyn.getX(), prevY = magazyn.getY();
+
+                        for (const auto &paczka : paczki)
+                        {
+                            double dist = calculateDistance(prevX, prevY, paczka.getX(), paczka.getY());
+                            totalDistance += dist;
+                            prevX = paczka.getX();
+                            prevY = paczka.getY();
+                            routes.push_back("Dostawa: " + paczka.getAdres());
+                        }
+
+                        totalDistance += calculateDistance(prevX, prevY, magazyn.getX(), magazyn.getY());
+                        routes.push_back("Powrot do magazynu");
+                        routes.push_back("Calkowita dlugosc trasy: " + std::to_string(totalDistance) + " jednostek");
+                    }
+
                     if (mapButton.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
                     {
                         showMap = true; // Set flag to show map window
@@ -333,6 +365,8 @@ int main()
         window.draw(geneticButtonText);
         window.draw(calculateGreedyButton);
         window.draw(greedyButtonText);
+        window.draw(calculateAnnealingButton);
+        window.draw(AnnealingButtonText);
         window.draw(mapButton);
         window.draw(mapButtonText);
 

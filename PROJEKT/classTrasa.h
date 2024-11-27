@@ -44,6 +44,8 @@ public:
     vector<Paczka> znajdzTraseAlgorytmZachlanny();  // Deklaracja metody zachłannej
 
     vector<Paczka> znajdzTraseAlgorytmGenetyczny(int rozmiarPopulacji = 50, int liczbaPokolen = 1000); 
+
+    vector<Paczka> znajdzTraseWyzarzanie();  // Deklaracja metody wyżarzania
     // Deklaracja metody genetycznej
 };
 

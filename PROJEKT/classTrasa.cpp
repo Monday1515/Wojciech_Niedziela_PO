@@ -197,3 +197,29 @@ vector<Paczka> Trasa::znajdzTraseAlgorytmGenetyczny(int rozmiarPopulacji, int li
 
     return populacja[0];
 }
+
+
+vector <Paczka> Trasa::znajdzTraseWyzarzanie() {
+    vector<Paczka> optymalnaTrasa = paczki;
+    double temperatura = 100.0;
+    double wspolczynnikChlodzenia = 0.999;
+    double minimalnaTemperatura = 0.0001;
+
+    while (temperatura > minimalnaTemperatura) {
+        int i = rand() % optymalnaTrasa.size();
+        int j = rand() % optymalnaTrasa.size();
+
+        double aktualnaDlugosc = obliczDlugoscTrasy(optymalnaTrasa);
+        swap(optymalnaTrasa[i], optymalnaTrasa[j]);
+        double nowaDlugosc = obliczDlugoscTrasy(optymalnaTrasa);
+
+        double prawdopodobienstwo = exp((aktualnaDlugosc - nowaDlugosc) / temperatura);
+        if (prawdopodobienstwo < (rand() / RAND_MAX)) {
+            swap(optymalnaTrasa[i], optymalnaTrasa[j]);
+        }
+
+        temperatura *= wspolczynnikChlodzenia;
+    }
+
+    return optymalnaTrasa;
+}
