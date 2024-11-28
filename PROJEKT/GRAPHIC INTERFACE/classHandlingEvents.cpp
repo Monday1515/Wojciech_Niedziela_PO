@@ -147,10 +147,6 @@ void classHandlingEvents::handleMouseClick(sf::Event &event, std::vector<Paczka>
         totalDistance += calculateDistance(prevX, prevY, magazyn.getX(), magazyn.getY());
         routes.push_back("Powrot do magazynu");
         routes.push_back("Calkowita dlugosc trasy: " + std::to_string(totalDistance) + " jednostek");
-        // cout<<currentRoute.size()<<endl;
-
-        // cout<<"rute w handle events "<<currentRoute.size()<<endl;
-        // return currentRoute;
     }
 
     // Obsługa kliknięcia przycisku algorytmu zachłannego

@@ -18,20 +18,6 @@ void Mapa::dodajOdleglosc(const string& lokalizacja1, const string& lokalizacja2
     this->odleglosci[make_pair(lokalizacja2, lokalizacja1)] = odleglosc; // Odległość w drugą stronę
 }
 
-// double Mapa::odleglosc(const string& lokacja1, const string& lokacja2) const {
-//     auto it = odleglosci.find({lokacja1, lokacja2});
-//     if (it != odleglosci.end()) {
-//         return it->second;
-//     }
-    
-//     it = odleglosci.find({lokacja2, lokacja1});
-//     if (it != odleglosci.end()) {
-//         return it->second;
-//     }
-
-//     throw runtime_error("Odległość między lokalizacjami nie jest dostępna.");
-// }
-
 double Mapa::odleglosc(double x1, double y1, double x2, double y2) const {
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }

@@ -41,13 +41,11 @@ void classDrawMap::showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Ma
                 // Otwórz okno szczegółów paczki
                 addPackageDetails(font, paczki, clickedX, clickedY);
 
-                selectingFromMap = false; // Wyłącz tryb wybierania z mapy
+                //selectingFromMap = false; // Wyłącz tryb wybierania z mapy
                 mapWindow.close();        // Zamknij mapę po wybraniu punktu
             }
         }
 
-
-        //cout<<currentRoute.size()<<endl;
         // Rysowanie mapy
         mapWindow.clear(sf::Color::White);
         drawMapWindow(mapWindow, font, paczki, magazyn, routes);

@@ -6,17 +6,23 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <cmath>
+
 #include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classPaczka.h"
 #include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classMagazyn.h"
 #include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classKurier.h"
 #include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classMapa.h"
 #include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classTrasa.h"
-#include <cmath>
 #include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/GRAPHIC INTERFACE/classDraw.h"
 
 
 int main()
 {
+     std::string path = getExecutablePath();
+    std::cout << "Executable is located in: " << path << std::endl;
+
+    
+
     sf::Font font;
     if (!font.loadFromFile("C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/FONTS/arial.ttf"))
     {
@@ -48,10 +54,6 @@ int main()
 
     // Inicjalizacja mapy
     Mapa mapa;
-    mapa.dodajOdleglosc("Warszawa, ul. Przykladowa 1", "Warszawa, ul. Wspolna 5", 3.2);
-    mapa.dodajOdleglosc("Warszawa, ul. Przykladowa 1", "Warszawa, ul. Krotka 12", 4.5);
-    mapa.dodajOdleglosc("Warszawa, ul. Wspolna 5", "Warszawa, ul. Krotka 12", 2.0);
-
 
     classDraw.MainWindow(window, font, paczki, magazyn, kurier, mapa);
 

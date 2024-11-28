@@ -48,17 +48,6 @@ public:
     
     void drawRoutes(sf::RenderWindow &window, sf::Font &font, std::vector<std::string> &routes);
 
-    // void showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
-
-    // void drawMapWindow(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
-
-    // void drawGrid(sf::RenderWindow &mapWindow);
-    // void drawAxis(sf::RenderWindow &mapWindow);
-    // void drawPackagesOnMap(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki);
-    // void drawWarehouse(sf::RenderWindow &mapWindow, sf::Font &font, Magazyn &magazyn);
-    // void drawRoutesOnMap(sf::RenderWindow &mapWindow, Magazyn &magazyn, const std::vector<Paczka> &optimalRoute);
-
-
     void addPackageDetails(sf::Font &font, std::vector<Paczka> &paczki, float x, float y);
 
 private:

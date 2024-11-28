@@ -200,10 +200,6 @@ UIElements classDraw::initializeUIElements(sf::Font &font)
     elements.buttons["map"] = buttonMap.first;
     elements.buttonTexts["map"] = buttonMap.second;
 
-    // auto buttonSelectFromMap = createButton(sf::Vector2f(640, 70), "Wybierz z mapy", sf::Color::Yellow, font);
-    // elements.buttons["selectFromMap"] = buttonSelectFromMap.first;
-    // elements.buttonTexts["selectFromMap"] = buttonSelectFromMap.second;
-
     return elements;
 }
 

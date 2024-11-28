@@ -29,10 +29,7 @@ public:
 
     bool selectingFromMap = true; // Flaga wskazująca, czy wybieramy punkt z mapy
 
-
     void showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes, std::vector<Paczka> &currentRoute);
-    //void showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes, std::vector<Paczka> &currentRoute);
-
 
     void drawMapWindow(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
 
