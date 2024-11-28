@@ -112,15 +112,17 @@ void classDraw::MainWindow(sf::RenderWindow &window, sf::Font &font, std::vector
         {
             // Obsługa zdarzeń
             //handleMainWindowEvents(event, window, paczki, magazyn, kurier, mapa, routes, showMap, uiElements, inputBuffers, step);
-            classHandlingEvents.handleMainWindowEvents(event, window, paczki, magazyn, kurier, mapa, routes, showMap, uiElements, inputBuffers, step);
+            classHandlingEvents.handleMainWindowEvents(event, window, paczki, magazyn, kurier, mapa, routes, showMap, uiElements, inputBuffers, step, currentRoute);
         }
         // Rysowanie głównego okna
         drawMainWindow(window, font, paczki, routes, uiElements);
         if (showMap)
         {
+            //cout<<"rute w draw "<<currentRoute.size()<<endl;
+            
             // Otwórz okno mapy
            // showMapWindow(font, paczki, magazyn, routes);
-            classDrawMap.showMapWindow(font, paczki, magazyn, routes);
+            classDrawMap.showMapWindow(font, paczki, magazyn, routes, currentRoute);
             showMap = false;
         }
     }
@@ -183,9 +185,9 @@ UIElements classDraw::initializeUIElements(sf::Font &font)
     elements.buttons["map"] = buttonMap.first;
     elements.buttonTexts["map"] = buttonMap.second;
 
-    auto buttonSelectFromMap = createButton(sf::Vector2f(640, 70), "Wybierz z mapy", sf::Color::Yellow, font);
-    elements.buttons["selectFromMap"] = buttonSelectFromMap.first;
-    elements.buttonTexts["selectFromMap"] = buttonSelectFromMap.second;
+    // auto buttonSelectFromMap = createButton(sf::Vector2f(640, 70), "Wybierz z mapy", sf::Color::Yellow, font);
+    // elements.buttons["selectFromMap"] = buttonSelectFromMap.first;
+    // elements.buttonTexts["selectFromMap"] = buttonSelectFromMap.second;
 
     return elements;
 }

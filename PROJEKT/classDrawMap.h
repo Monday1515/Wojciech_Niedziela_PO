@@ -8,7 +8,10 @@
 #include "classPaczka.h"
 #include "classMagazyn.h"
 #include "classKurier.h"
-#include "classMapa.h"
+#include "classMapa.h"  
+#include "classHandlingEvents.h"  
+
+
 
 class Paczka;
 class Magazyn;
@@ -31,7 +34,15 @@ public:
     // Konstruktor domyślny
     classDrawMap();
 
-    void showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
+    std::vector<Paczka> currentRoute;
+
+
+    bool selectingFromMap = true; // Flaga wskazująca, czy wybieramy punkt z mapy
+
+
+    void showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes, std::vector<Paczka> &currentRoute);
+    //void showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes, std::vector<Paczka> &currentRoute);
+
 
     void drawMapWindow(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
 
@@ -48,9 +59,8 @@ public:
 private:
 //    double calculateDistance(double x1, double y1, double x2, double y2);
     std::vector<std::string> inputBuffers{5, ""}; // 5 fields: ID, address, weight, x, y
-    std::vector<Paczka> currentRoute;
+//    std::vector<Paczka> currentRoute;
     int step = 0;
-    bool selectingFromMap = false; // Flaga wskazująca, czy wybieramy punkt z mapy
 };
 
 #endif // DRAW_MAP_H

@@ -9,20 +9,19 @@
 #include "classHandlingEvents.h"
 #include "classDrawMap.h"
 
-
 // Konstruktor klasy
 classDrawMap::classDrawMap() {}
 
-
 // Rysowanie mapy
 
-void classDrawMap::showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes)
+void classDrawMap::showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes, std::vector<Paczka> &currentRoute)
 {
     sf::VideoMode fullScreenMode = sf::VideoMode::getDesktopMode();
     sf::RenderWindow mapWindow(fullScreenMode, "Mapa paczek", sf::Style::Default);
 
     while (mapWindow.isOpen())
     {
+
         sf::Event event; // Deklaracja zmiennej event
         while (mapWindow.pollEvent(event))
         {
@@ -30,6 +29,7 @@ void classDrawMap::showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Ma
             {
                 mapWindow.close();
             }
+
 
             // Obsługa kliknięcia na mapę, gdy flaga selectingFromMap jest włączona
             if (selectingFromMap && event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
@@ -42,22 +42,23 @@ void classDrawMap::showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Ma
                 addPackageDetails(font, paczki, clickedX, clickedY);
 
                 selectingFromMap = false; // Wyłącz tryb wybierania z mapy
-                mapWindow.close(); // Zamknij mapę po wybraniu punktu
+                mapWindow.close();        // Zamknij mapę po wybraniu punktu
             }
         }
 
+
+        //cout<<currentRoute.size()<<endl;
         // Rysowanie mapy
         mapWindow.clear(sf::Color::White);
         drawMapWindow(mapWindow, font, paczki, magazyn, routes);
         if (!currentRoute.empty())
         {
+            //cout<<"Rysowanie aktualnej trasy"<<endl;
             drawRoutesOnMap(mapWindow, magazyn, currentRoute); // Rysowanie aktualnej trasy
         }
         mapWindow.display();
     }
 }
-
-
 
 void classDrawMap::addPackageDetails(sf::Font &font, std::vector<Paczka> &paczki, float x, float y)
 {
@@ -78,7 +79,7 @@ void classDrawMap::addPackageDetails(sf::Font &font, std::vector<Paczka> &paczki
 
     // Pola tekstowe
     std::vector<std::string> inputBuffers(2, ""); // Bufory dla ID i Adresu
-    int step = 0; // Aktualnie edytowane pole
+    int step = 0;                                 // Aktualnie edytowane pole
 
     sf::RectangleShape inputField(sf::Vector2f(300, 30));
     inputField.setFillColor(sf::Color::White);
@@ -151,8 +152,7 @@ void classDrawMap::addPackageDetails(sf::Font &font, std::vector<Paczka> &paczki
     }
 }
 
-
-void classDrawMap::drawMapWindow(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes) 
+void classDrawMap::drawMapWindow(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes)
 {
     mapWindow.clear(sf::Color::White);
 
@@ -257,7 +257,6 @@ void classDrawMap::drawWarehouse(sf::RenderWindow &mapWindow, sf::Font &font, Ma
     mapWindow.draw(warehouseText);
 }
 
-
 void classDrawMap::drawRoutesOnMap(sf::RenderWindow &mapWindow, Magazyn &magazyn, const std::vector<Paczka> &optimalRoute)
 {
     if (optimalRoute.empty())
@@ -293,4 +292,3 @@ void classDrawMap::drawRoutesOnMap(sf::RenderWindow &mapWindow, Magazyn &magazyn
     // Rysowanie linii
     mapWindow.draw(routeLines);
 }
-

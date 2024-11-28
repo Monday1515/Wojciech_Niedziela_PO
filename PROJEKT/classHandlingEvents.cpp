@@ -17,7 +17,8 @@ double classHandlingEvents::calculateDistance(double x1, double y1, double x2, d
 
 
 void classHandlingEvents::handleMainWindowEvents(sf::Event &event, sf::RenderWindow &window, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa,
-                                       std::vector<std::string> &routes, bool &showMap, UIElements &uiElements, std::vector<std::string> &inputBuffers, int &step)
+                                       std::vector<std::string> &routes, bool &showMap, UIElements &uiElements, std::vector<std::string> &inputBuffers, int &step, 
+                                       std::vector<Paczka> &currentRoute)
 {
     if (event.type == sf::Event::Closed)
     {
@@ -57,7 +58,7 @@ void classHandlingEvents::handleMainWindowEvents(sf::Event &event, sf::RenderWin
     else if (event.type == sf::Event::MouseButtonPressed)
     {
         // Obsługa kliknięć
-        handleMouseClick(event, paczki, magazyn, kurier, mapa, routes, showMap, uiElements);
+        handleMouseClick(event, paczki, magazyn, kurier, mapa, routes, showMap, uiElements, currentRoute);
     }
 }
 
@@ -84,7 +85,7 @@ void classHandlingEvents::handleTextInput(sf::Event &event, std::vector<std::str
 }
 
 void classHandlingEvents::handleMouseClick(sf::Event &event, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa,
-                                 std::vector<std::string> &routes, bool &showMap, UIElements &uiElements)
+                                 std::vector<std::string> &routes, bool &showMap, UIElements &uiElements,  std::vector<Paczka> &currentRoute)
 {
     // Obsługa kliknięcia przycisku algorytmu genetycznego
     if (uiElements.buttons["calculateGenetic"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
@@ -107,6 +108,12 @@ void classHandlingEvents::handleMouseClick(sf::Event &event, std::vector<Paczka>
         totalDistance += calculateDistance(prevX, prevY, magazyn.getX(), magazyn.getY());
         routes.push_back("Powrot do magazynu");
         routes.push_back("Calkowita dlugosc trasy: " + std::to_string(totalDistance) + " jednostek");
+        //cout<<currentRoute.size()<<endl;
+
+            //cout<<"rute w handle events "<<currentRoute.size()<<endl;
+            //return currentRoute;
+
+
     }
 
     // Obsługa kliknięcia przycisku algorytmu zachłannego
@@ -176,12 +183,18 @@ void classHandlingEvents::handleMouseClick(sf::Event &event, std::vector<Paczka>
     if (uiElements.buttons["map"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
     {
         showMap = true;
+        //classDrawMap.drawMapWindow(font, paczki, magazyn, routes, currentRoute); // Dodaj currentRoute
     }
 
     if (uiElements.buttons["selectFromMap"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
     {
         showMap = true;          // Otwórz mapę do wyboru punktu
         selectingFromMap = true; // Włącz tryb wybierania z mapy
+
+
     }
+
+
+
 }
 

@@ -11,6 +11,7 @@
 #include "classMapa.h"
 #include "classDraw.h"
 
+
 class Paczka;
 class Magazyn;
 class Kurier;
@@ -32,17 +33,22 @@ public:
     // Konstruktor domyślny
     classHandlingEvents();
 
+    std::vector<Paczka> currentRoute;
+
+
     void handleTextInput(sf::Event &event, std::vector<std::string> &inputBuffers, int &step, UIElements &uiElements);
 
-    void handleMouseClick(sf::Event &event, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa, std::vector<std::string> &routes, bool &showMap, UIElements &uiElements);
+    void handleMouseClick(sf::Event &event, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa, std::vector<std::string> &routes, bool &showMap, 
+    UIElements &uiElements, std::vector<Paczka> &currentRoute);
 
     void handleMainWindowEvents(sf::Event &event, sf::RenderWindow &window, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa,
-                                std::vector<std::string> &routes, bool &showMap, UIElements &uiElements, std::vector<std::string> &inputBuffers, int &step);
+                                std::vector<std::string> &routes, bool &showMap, UIElements &uiElements, std::vector<std::string> &inputBuffers, int &step, 
+                                std::vector<Paczka> &currentRoute);
 
 private:
     double calculateDistance(double x1, double y1, double x2, double y2);
     std::vector<std::string> inputBuffers{5, ""}; // 5 fields: ID, address, weight, x, y
-    std::vector<Paczka> currentRoute;
+    //std::vector<Paczka> currentRoute;
     int step = 0;
     bool selectingFromMap = false; // Flaga wskazująca, czy wybieramy punkt z mapy
 };
