@@ -15,11 +15,13 @@ double classHandlingEvents::calculateDistance(double x1, double y1, double x2, d
     return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-
 void classHandlingEvents::handleMainWindowEvents(sf::Event &event, sf::RenderWindow &window, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa,
-                                       std::vector<std::string> &routes, bool &showMap, UIElements &uiElements, std::vector<std::string> &inputBuffers, int &step, 
-                                       std::vector<Paczka> &currentRoute)
+                                                 std::vector<std::string> &routes, bool &showMap, UIElements &uiElements, std::vector<std::string> &inputBuffers, int &step,
+                                                 std::vector<Paczka> &currentRoute)
 {
+    int paczkaId=-1;
+    double waga=-1, x=-1, y=-1;
+
     if (event.type == sf::Event::Closed)
     {
         window.close();
@@ -34,11 +36,47 @@ void classHandlingEvents::handleMainWindowEvents(sf::Event &event, sf::RenderWin
         // Przechodzenie między polami i dodawanie paczki
         if (step == 4)
         {
-            int paczkaId = std::stoi(inputBuffers[0]);
+
+            try
+            {
+                paczkaId = std::stoi(inputBuffers[0]);
+            }
+            catch (const std::invalid_argument &e)
+            {
+                std::cout << "Blad. Ustawiono domyslna wartosc = -1" << std::endl;
+            }
+
             std::string adres = inputBuffers[1];
-            double waga = std::stod(inputBuffers[2]);
-            double x = std::stod(inputBuffers[3]);
-            double y = std::stod(inputBuffers[4]);
+
+            try
+            {
+                 waga = std::stod(inputBuffers[2]);
+            }
+            catch (const std::invalid_argument &e)
+            {
+                std::cout << "Blad. Ustawiono domyslna wartosc = -1" << std::endl;
+            }
+            
+            try
+            {
+                x = std::stod(inputBuffers[3]);
+            }
+            catch (const std::invalid_argument &e)
+            {
+                std::cout << "Blad. Ustawiono domyslna wartosc = -1" << std::endl;
+            }
+
+            try
+            {
+                y = std::stod(inputBuffers[4]);
+            }
+            catch (const std::invalid_argument &e)
+            {
+                std::cout << "Blad. Ustawiono domyslna wartosc = -1" << std::endl;
+            }
+           
+            
+            
 
             paczki.emplace_back(paczkaId, adres, waga, x, y); // Dodanie paczki
             inputBuffers = std::vector<std::string>(5, "");   // Resetowanie buforów
@@ -62,7 +100,6 @@ void classHandlingEvents::handleMainWindowEvents(sf::Event &event, sf::RenderWin
     }
 }
 
-
 void classHandlingEvents::handleTextInput(sf::Event &event, std::vector<std::string> &inputBuffers, int &step, UIElements &uiElements)
 {
     if (event.text.unicode < 128 && step < inputBuffers.size())
@@ -85,12 +122,14 @@ void classHandlingEvents::handleTextInput(sf::Event &event, std::vector<std::str
 }
 
 void classHandlingEvents::handleMouseClick(sf::Event &event, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa,
-                                 std::vector<std::string> &routes, bool &showMap, UIElements &uiElements,  std::vector<Paczka> &currentRoute)
+                                           std::vector<std::string> &routes, bool &showMap, UIElements &uiElements, std::vector<Paczka> &currentRoute)
 {
     // Obsługa kliknięcia przycisku algorytmu genetycznego
-    if (uiElements.buttons["calculateGenetic"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
+    if (uiElements.buttons["calculateGenetic"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)) 
+    && paczki.size() > 0)
     {
         Trasa trasa(&kurier, &magazyn, paczki, &mapa);
+
         currentRoute = trasa.znajdzTraseAlgorytmGenetyczny(); // Zapisz trasę do `currentRoute`
 
         routes.clear();
@@ -108,16 +147,15 @@ void classHandlingEvents::handleMouseClick(sf::Event &event, std::vector<Paczka>
         totalDistance += calculateDistance(prevX, prevY, magazyn.getX(), magazyn.getY());
         routes.push_back("Powrot do magazynu");
         routes.push_back("Calkowita dlugosc trasy: " + std::to_string(totalDistance) + " jednostek");
-        //cout<<currentRoute.size()<<endl;
+        // cout<<currentRoute.size()<<endl;
 
-            //cout<<"rute w handle events "<<currentRoute.size()<<endl;
-            //return currentRoute;
-
-
+        // cout<<"rute w handle events "<<currentRoute.size()<<endl;
+        // return currentRoute;
     }
 
     // Obsługa kliknięcia przycisku algorytmu zachłannego
-    if (uiElements.buttons["calculateGreedy"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
+    if (uiElements.buttons["calculateGreedy"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))
+    && paczki.size() > 0)
     {
         Trasa trasa(&kurier, &magazyn, paczki, &mapa);
         currentRoute = trasa.znajdzTraseAlgorytmZachlanny();
@@ -146,7 +184,8 @@ void classHandlingEvents::handleMouseClick(sf::Event &event, std::vector<Paczka>
     }
 
     // Obsługa kliknięcia przycisku algorytmu wyżarzania
-    if (uiElements.buttons["calculateAnnealing"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
+    if (uiElements.buttons["calculateAnnealing"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y))
+    && paczki.size() > 0)
     {
         Trasa trasa(&kurier, &magazyn, paczki, &mapa);
         currentRoute = trasa.znajdzTraseWyzarzanie();
@@ -183,18 +222,12 @@ void classHandlingEvents::handleMouseClick(sf::Event &event, std::vector<Paczka>
     if (uiElements.buttons["map"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
     {
         showMap = true;
-        //classDrawMap.drawMapWindow(font, paczki, magazyn, routes, currentRoute); // Dodaj currentRoute
+        // classDrawMap.drawMapWindow(font, paczki, magazyn, routes, currentRoute); // Dodaj currentRoute
     }
 
     if (uiElements.buttons["selectFromMap"].getGlobalBounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
     {
         showMap = true;          // Otwórz mapę do wyboru punktu
         selectingFromMap = true; // Włącz tryb wybierania z mapy
-
-
     }
-
-
-
 }
-

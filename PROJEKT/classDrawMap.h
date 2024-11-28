@@ -12,21 +12,11 @@
 #include "classHandlingEvents.h"  
 
 
-
 class Paczka;
 class Magazyn;
 class Kurier;
 class Mapa;
 
-// struct UIElements
-// {
-//     sf::Text inputText;
-//     std::vector<sf::RectangleShape> inputFields;       // Pola wejściowe
-//     std::vector<sf::Text> inputTexts;                  // Teksty wprowadzane
-//     std::vector<sf::Text> inputLabels;                 // Etykiety dla pól wejściowych
-//     std::map<std::string, sf::RectangleShape> buttons; // Przycisk mapowany na nazwy
-//     std::map<std::string, sf::Text> buttonTexts;       // Teksty na przyciskach
-// };
 
 class classDrawMap
 {

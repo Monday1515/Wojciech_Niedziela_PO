@@ -81,7 +81,7 @@ void classDrawMap::addPackageDetails(sf::Font &font, std::vector<Paczka> &paczki
     std::vector<std::string> inputBuffers(2, ""); // Bufory dla ID i Adresu
     int step = 0;                                 // Aktualnie edytowane pole
 
-    sf::RectangleShape inputField(sf::Vector2f(300, 30));
+    sf::RectangleShape inputField(sf::Vector2f(1, 30));
     inputField.setFillColor(sf::Color::White);
     inputField.setOutlineThickness(1);
     inputField.setOutlineColor(sf::Color::Black);
@@ -127,7 +127,7 @@ void classDrawMap::addPackageDetails(sf::Font &font, std::vector<Paczka> &paczki
             }
         }
 
-        detailWindow.clear(sf::Color::White);
+        detailWindow.clear();
 
         // Rysowanie etykiet
         detailWindow.draw(idLabel);
@@ -136,15 +136,15 @@ void classDrawMap::addPackageDetails(sf::Font &font, std::vector<Paczka> &paczki
         detailWindow.draw(wspolrzedneLabel);
 
         // Rysowanie pola aktywnego
-        inputField.setPosition(20, 20 + step * 60);
+        inputField.setPosition(130, 20 + step * 60);
         detailWindow.draw(inputField);
 
         // Wyświetlanie tekstu w polach
         for (int i = 0; i < 2; ++i)
         {
             sf::Text fieldText(inputBuffers[i], font, 20);
-            fieldText.setPosition(25, 25 + i * 60);
-            fieldText.setFillColor(sf::Color::Black);
+            fieldText.setPosition(130, 25 + i * 60);
+            fieldText.setFillColor(sf::Color::White);
             detailWindow.draw(fieldText);
         }
 

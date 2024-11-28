@@ -58,11 +58,26 @@ void classDraw::MagazynInput(sf::Font &font, std::vector<std::string> &magazynIn
             {
                 if (magazynStep == 0)
                 {
-                    magazynX = std::stod(magazynInputBuffers[magazynStep]);
+                    try
+                    {
+                        magazynX = std::stod(magazynInputBuffers[magazynStep]);
+                    }
+                    catch (const std::invalid_argument &e)
+                    {
+                        std::cout << "Blad. Ustawiono domyslna wartosc = 0" << std::endl;
+                    }
                 }
                 else if (magazynStep == 1)
                 {
-                    magazynY = std::stod(magazynInputBuffers[magazynStep]);
+                    try
+                    {
+                        magazynY = std::stod(magazynInputBuffers[magazynStep]);
+                    }
+                    catch (const std::invalid_argument &e)
+                    {
+                        std::cout << "Blad. Ustawiono domyslna wartosc = 0" << std::endl;
+                    }
+
                     inputWindow.close();
                 }
                 magazynStep++;
@@ -111,17 +126,17 @@ void classDraw::MainWindow(sf::RenderWindow &window, sf::Font &font, std::vector
         while (window.pollEvent(event))
         {
             // Obsługa zdarzeń
-            //handleMainWindowEvents(event, window, paczki, magazyn, kurier, mapa, routes, showMap, uiElements, inputBuffers, step);
+            // handleMainWindowEvents(event, window, paczki, magazyn, kurier, mapa, routes, showMap, uiElements, inputBuffers, step);
             classHandlingEvents.handleMainWindowEvents(event, window, paczki, magazyn, kurier, mapa, routes, showMap, uiElements, inputBuffers, step, currentRoute);
         }
         // Rysowanie głównego okna
         drawMainWindow(window, font, paczki, routes, uiElements);
         if (showMap)
         {
-            //cout<<"rute w draw "<<currentRoute.size()<<endl;
-            
+            // cout<<"rute w draw "<<currentRoute.size()<<endl;
+
             // Otwórz okno mapy
-           // showMapWindow(font, paczki, magazyn, routes);
+            // showMapWindow(font, paczki, magazyn, routes);
             classDrawMap.showMapWindow(font, paczki, magazyn, routes, currentRoute);
             showMap = false;
         }
@@ -192,7 +207,6 @@ UIElements classDraw::initializeUIElements(sf::Font &font)
     return elements;
 }
 
-
 std::pair<sf::RectangleShape, sf::Text> classDraw::createButton(const sf::Vector2f &position, const std::string &text, const sf::Color &color, sf::Font &font)
 {
     sf::RectangleShape button(sf::Vector2f(200, 50));
@@ -208,8 +222,6 @@ std::pair<sf::RectangleShape, sf::Text> classDraw::createButton(const sf::Vector
 
     return {button, buttonText};
 }
-
-
 
 // Rysowanie głównego okna
 
@@ -239,7 +251,6 @@ void classDraw::drawMainWindow(sf::RenderWindow &window, sf::Font &font, std::ve
 
     window.display();
 }
-
 
 void classDraw::drawUIElements(sf::RenderWindow &window, UIElements &uiElements)
 {
@@ -298,5 +309,3 @@ void classDraw::drawRoutes(sf::RenderWindow &window, sf::Font &font, std::vector
         routeText.move(0, 30); // Przesunięcie w dół dla kolejnej linii
     }
 }
-
-
