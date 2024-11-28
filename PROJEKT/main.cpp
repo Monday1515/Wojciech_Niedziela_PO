@@ -1,16 +1,18 @@
-// g++ -o program main.cpp classPaczka.cpp classMagazyn.cpp classKurier.cpp classMapa.cpp classTrasa.cpp -lsfml-graphics -lsfml-window -lsfml-system
+// g++ -o program main.cpp "GRAPHIC INTERFACE/classDraw.cpp" "GRAPHIC INTERFACE/classHandlingEvents.cpp" "GRAPHIC INTERFACE/classDrawMap.cpp" "MECHANICS/classPaczka.cpp" "MECHANICS/classMagazyn.cpp" "MECHANICS/classKurier.cpp" "MECHANICS/classMapa.cpp" "MECHANICS/classTrasa.cpp" -lsfml-graphics -lsfml-window -lsfml-system
+
+
 // ./program
 
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "classPaczka.h"
-#include "classMagazyn.h"
-#include "classKurier.h"
-#include "classMapa.h"
-#include "classTrasa.h"
+#include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classPaczka.h"
+#include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classMagazyn.h"
+#include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classKurier.h"
+#include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classMapa.h"
+#include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/MECHANICS/classTrasa.h"
 #include <cmath>
-#include "classDraw.h"
+#include "C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/GRAPHIC INTERFACE/classDraw.h"
 
 
 int main()
