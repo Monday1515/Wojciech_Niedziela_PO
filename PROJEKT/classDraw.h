@@ -34,40 +34,30 @@ public:
     // Funkcja do wprowadzania współrzędnych magazynu
     void MagazynInput(sf::Font &font, std::vector<std::string> &magazynInputBuffers, int &magazynStep, double &magazynX, double &magazynY);
 
-    void MainWindow(
-        sf::RenderWindow &window,
-        sf::Font &font,
-        std::vector<Paczka> &paczki,
-        Magazyn &magazyn,
-        Kurier &kurier,
-        Mapa &mapa);
-
-    //void handleTextInput(sf::Event &event, std::vector<std::string> &inputBuffers, int &step, UIElements &uiElements);
-
-    //void handleMouseClick(sf::Event &event, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa, std::vector<std::string> &routes, bool &showMap, UIElements &uiElements);
+    void MainWindow(sf::RenderWindow &window, sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa);
 
     UIElements initializeUIElements(sf::Font &font);
 
-    void drawUIElements(sf::RenderWindow &window, UIElements &uiElements);
-    void drawPackages(sf::RenderWindow &window, sf::Font &font, std::vector<Paczka> &paczki);
-    void drawRoutes(sf::RenderWindow &window, sf::Font &font, std::vector<std::string> &routes);
-
-    void showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
-
-    void drawMapWindow(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
-
-    void drawGrid(sf::RenderWindow &mapWindow);
-    void drawAxis(sf::RenderWindow &mapWindow);
-    void drawPackagesOnMap(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki);
-    void drawWarehouse(sf::RenderWindow &mapWindow, sf::Font &font, Magazyn &magazyn);
-    void drawRoutesOnMap(sf::RenderWindow &mapWindow, Magazyn &magazyn, const std::vector<Paczka> &optimalRoute);
-
- //   void handleMainWindowEvents(sf::Event &event, sf::RenderWindow &window, std::vector<Paczka> &paczki, Magazyn &magazyn, Kurier &kurier, Mapa &mapa,
- //                               std::vector<std::string> &routes, bool &showMap, UIElements &uiElements, std::vector<std::string> &inputBuffers, int &step);
+    std::pair<sf::RectangleShape, sf::Text> createButton(const sf::Vector2f &position, const std::string &text, const sf::Color &color, sf::Font &font);
 
     void drawMainWindow(sf::RenderWindow &window, sf::Font &font, std::vector<Paczka> &paczki, std::vector<std::string> &routes, UIElements &uiElements);
 
-    std::pair<sf::RectangleShape, sf::Text> createButton(const sf::Vector2f &position, const std::string &text, const sf::Color &color, sf::Font &font);
+    void drawUIElements(sf::RenderWindow &window, UIElements &uiElements);
+
+    void drawPackages(sf::RenderWindow &window, sf::Font &font, std::vector<Paczka> &paczki);
+    
+    void drawRoutes(sf::RenderWindow &window, sf::Font &font, std::vector<std::string> &routes);
+
+    // void showMapWindow(sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
+
+    // void drawMapWindow(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki, Magazyn &magazyn, std::vector<std::string> &routes);
+
+    // void drawGrid(sf::RenderWindow &mapWindow);
+    // void drawAxis(sf::RenderWindow &mapWindow);
+    // void drawPackagesOnMap(sf::RenderWindow &mapWindow, sf::Font &font, std::vector<Paczka> &paczki);
+    // void drawWarehouse(sf::RenderWindow &mapWindow, sf::Font &font, Magazyn &magazyn);
+    // void drawRoutesOnMap(sf::RenderWindow &mapWindow, Magazyn &magazyn, const std::vector<Paczka> &optimalRoute);
+
 
     void addPackageDetails(sf::Font &font, std::vector<Paczka> &paczki, float x, float y);
 
