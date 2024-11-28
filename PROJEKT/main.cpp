@@ -12,15 +12,10 @@
 #include <cmath>
 #include "classDraw.h"
 
-// Funkcja pomocnicza do obliczania odległości między dwoma punktami
-// double calculateDistance(double x1, double y1, double x2, double y2)
-// {
-//     return std::sqrt(std::pow(x2 - x1, 2) + std::pow(y2 - y1, 2));
-// }
 
 int main()
 {
-     sf::Font font;
+    sf::Font font;
     if (!font.loadFromFile("C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/FONTS/arial.ttf"))
     {
         std::cerr << "Failed to load font!" << std::endl;
