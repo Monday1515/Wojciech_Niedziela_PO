@@ -1,6 +1,5 @@
 // g++ -o program main.cpp "GRAPHIC INTERFACE/classDraw.cpp" "GRAPHIC INTERFACE/classHandlingEvents.cpp" "GRAPHIC INTERFACE/classDrawMap.cpp" "MECHANICS/classPaczka.cpp" "MECHANICS/classMagazyn.cpp" "MECHANICS/classKurier.cpp" "MECHANICS/classMapa.cpp" "MECHANICS/classTrasa.cpp" -lsfml-graphics -lsfml-window -lsfml-system
 
-
 // ./program
 
 #include <iostream>
