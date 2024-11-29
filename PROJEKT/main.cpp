@@ -17,11 +17,6 @@
 
 int main()
 {
-     std::string path = getExecutablePath();
-    std::cout << "Executable is located in: " << path << std::endl;
-
-    
-
     sf::Font font;
     if (!font.loadFromFile("C:/Users/Admin/Documents/Studia/3 semestr/Programowanie Obiektowe/github/Wojciech_Niedziela_PO/PROJEKT/FONTS/arial.ttf"))
     {
