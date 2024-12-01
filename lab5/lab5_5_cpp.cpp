@@ -53,7 +53,7 @@ int main()
     Samochod mojSamochod("Toyota", "Corolla");
 
     // Próba dostępu do metod klasy bazowej
-    //mojSamochod.pokazInformacje(); // Błąd: metoda jest chroniona przez dziedziczenie chronione
+    //mojSamochod.pokazInformacje(); // Błąd: metoda jest chroniona przez dziedziczenie chronione // pokazInfo()
 
     // Wywołanie metody klasy Samochod, która korzysta z chronionych elementów
     mojSamochod.pokazDaneSamochodu();
