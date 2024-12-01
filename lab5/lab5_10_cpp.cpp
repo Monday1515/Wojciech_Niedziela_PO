@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream> // przejrzałam wszystkie zadania z C++
 using namespace std;
 
 // Klasa bazowa: Pojazd
