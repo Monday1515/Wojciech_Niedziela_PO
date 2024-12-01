@@ -58,7 +58,7 @@ int main()
     Samochod mojSamochod("Ford", "Focus");
 
     // Próba dostępu do metod klasy bazowej
-    // mojSamochod.pokazInformacje(); // Błąd: metoda jest prywatna w klasie Samochod
+    // mojSamochod.pokazInformacje(); // Błąd: metoda jest prywatna w klasie Samochod  // jak w zad. 5
     mojSamochod.pokazDaneSamochodu(); // Dostęp poprzez metodę klasy Samochod
     mojSamochod.pokazInformacjeSamochodu(); // Dostęp poprzez "wrapper" metody w klasie Samochod
 
