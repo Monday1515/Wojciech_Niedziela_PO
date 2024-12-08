@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>   // rozwiazanie poprawne
 #include <string>
 #include <vector>
 #include <memory>
@@ -37,7 +37,7 @@ public:
 
     void zatrzymaj() override {
         std::cout << "Samochod hamuje i zatrzymuje sie." << std::endl;
-    }
+    } // szkoda, że nie zdefiniował Pan destruktorów w klasach pochodnych
 };
 
 // Klasa pochodna: Rower
