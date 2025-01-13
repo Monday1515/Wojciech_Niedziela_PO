@@ -4,7 +4,7 @@ using namespace std;
 // Interfejs dla kształtów
 class Shape {
 public:
-    virtual double getArea() const = 0;  // Czyni metodę wirtualną
+    virtual double getArea() const = 0;  // Czyni metodę wirtualną // czysto wirtualną
     virtual ~Shape() = default;  // Wirtualny destruktor
 };
 
@@ -31,7 +31,7 @@ public:
 };
 
 // Kwadrat
-class Square : public Shape {
+class Square : public Shape { // Square mógł śmiało dziedziczyć po Rectangle
 private:
     double side;
 
