@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream> // poprawnie
 using namespace std;
 
 // Interfejs dla drukarki
