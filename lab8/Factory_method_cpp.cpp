@@ -10,7 +10,7 @@ public:
 
 class Car : public Vehicle {
 public:
-    void create() override {
+    void create() override { // ta metoda powinna być zdefiniowana w klasie VehicleFactory i pochodnych 
         cout << "Samochod stworzony" << endl;
     }
 };
@@ -22,10 +22,10 @@ public:
     }
 };
 
-class VehicleFactory {
+class VehicleFactory {   
 public:
     Vehicle* createVehicle(const string& type) {
-        if (type == "car") {
+        if (type == "car") { // przydałyby się klasy pochodne w miejsce tej instrukcji warunkowej (zasda open/closed)
             return new Car();
         } else if (type == "bike") {
             return new Bike();
